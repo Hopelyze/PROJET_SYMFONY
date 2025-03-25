@@ -1,0 +1,15 @@
+{% block header %}
+    <header class="site-header">
+    </header>
+{% endblock %}
+
+{% block menu %}
+    <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
+    <div class="menu">
+        <a href="#home" class="active">Accueil</a>
+        <a href="#products">Produits</a>
+        <a href="#cart">Panier <span class="cart-count">(0)</span></a>
+        <a href="#account">Mon Compte</a>
+        <a href="#contact">Contact</a>
+    </div>
+{% endblock %}
