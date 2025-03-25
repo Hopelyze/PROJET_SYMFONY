@@ -46,3 +46,12 @@
         text-align: left;
     }
 }
+
+.site-footer {
+    width: 100%;
+    height: 300px; /* Ajuste la hauteur selon tes besoins (cette valeur rogne l'image) */
+    background-image: url('../images/bannerFooter.jpg'); /* Chemin correct vers l'image */
+    background-size: cover; /* L'image couvre toute la largeur du conteneur */
+    background-position: center center; /* Centre l'image horizontalement et verticalement */
+    background-repeat: no-repeat; /* Empêche la répétition de l'image */
+}
