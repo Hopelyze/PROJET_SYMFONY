@@ -11,7 +11,8 @@ final class MainController extends AbstractController
     #[Route('/', name: 'accueil_index')]
     public function indexAction(): Response
     {
-        return $this->render('index.html.twig');
+        $moi = $this->getParameter('moi'); // Récupère la variable depuis services.yaml
+        return $this->render('index.html.twig', ['moi' => $moi,]);
     }
 
     // pour inclusion de contrôleur dans le template secondaire : action non routable
