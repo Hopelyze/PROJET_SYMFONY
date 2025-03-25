@@ -34,8 +34,8 @@
 
 /* Ajout de style pour le menu actif */
 .menu a.active {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #f1d867;
+    color: rgb(77, 53, 31);
 }
 
 /* Mobile-first: menu horizontal pour les écrans larges, vertical pour les petits écrans */
