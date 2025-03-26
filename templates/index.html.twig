@@ -1,12 +1,26 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Vente</title>
-    </head>
-    <body>
-        {% include 'base.html.twig' %}
+<html lang="fr">
+<head class="site-header">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mon Site{% endblock %}</title>
+</head>
+
+<body>
+
+    {# Inclusion du menu #}
+    {% include 'layout/_menu.html.twig' %}
+
+    {# Contenu principal #}
+    <main>
+        {% block content %}{% endblock %}
         <h1>Bienvenue, {{ moi }} !</h1>
         <p>Vous êtes connecté(e) en tant que {{ moi }}.</p>
-    </body>
+    </main>
+
+</body>
+<footer>
+    {# Inclusion du footer ici #}
+    {% include 'layout/_footer.html.twig' %}
+</footer>
 </html>
