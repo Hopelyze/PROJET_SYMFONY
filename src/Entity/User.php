@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -31,6 +32,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column(length: 200)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 200)]
+    private ?string $forename = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $birth = null;
+
+    #[ORM\Column]
+    private ?bool $admin = null;
 
     public function getId(): ?int
     {
@@ -105,5 +118,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getForename(): ?string
+    {
+        return $this->forename;
+    }
+
+    public function setForename(string $forename): static
+    {
+        $this->forename = $forename;
+
+        return $this;
+    }
+
+    public function getBirth(): ?\DateTimeInterface
+    {
+        return $this->birth;
+    }
+
+    public function setBirth(\DateTimeInterface $birth): static
+    {
+        $this->birth = $birth;
+
+        return $this;
+    }
+
+    public function isAdmin(): ?bool
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(bool $admin): static
+    {
+        $this->admin = $admin;
+
+        return $this;
     }
 }
