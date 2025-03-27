@@ -9,12 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FleurController extends AbstractController
 {
-    #[Route('/', name: 'home')]
+    #[Route('/accueil', name: 'accueil')]
     public function index(EntityManagerInterface $entityManager): Response
     {
         $fleurs = $entityManager->getRepository(Fleurs::class)->findAll();
 
-        return $this->render('index.html.twig', [
+        return $this->render('layout/_accueil.html.twig', [
             'fleurs' => $fleurs,
             'moi' => 'Visiteur', // À remplacer par l'utilisateur authentifié si besoin
         ]);
