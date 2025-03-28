@@ -8,9 +8,19 @@
 </head>
 
 <body>
-    {%block body%}
+{%block body%}
+    {# Inclusion du menu #}
+    {% include 'layout/_menu.html.twig' %}
 
-    {%endblock%}
+    {# Contenu principal #}
+    <main>
+        {% block content %}
+            
+        {% endblock %}
+        
+    </main>
+
+{%endblock%}
 
 </body>
 <footer>

@@ -3,32 +3,22 @@
 
 {% block title %}Accueil{% endblock %}
 
-    {%block body%}
-    {# Inclusion du menu #}
-    {% include 'layout/_menu.html.twig' %}
+{%block content%}
+    <h1>Bienvenue, {{ moi }} !</h1>
+    <p>Vous êtes connecté(e) en tant que {{ moi }}.</p>
 
-    {# Contenu principal #}
-    <main>
-        {% block content %}
-            <h1>Bienvenue, {{ moi }} !</h1>
-            <p>Vous êtes connecté(e) en tant que {{ moi }}.</p>
-
-             <section id="products">
-                <h2>Nos Fleurs</h2>
-                <div class="product-list">
-                    {% for fleur in fleurs %}
-                        <div class="product-card">
-                            <h3>{{ fleur.libelle }}</h3>
-                            <p>Prix : {{ fleur.prix }} €</p>
-                           <p>Stock : {{ fleur.quantiteStock }}</p>
-                          </div>
-                    {% else %}
-                        <p>Aucun produit disponible.</p>
-                    {% endfor %}
+    <section id="products">
+        <h2>Nos Fleurs</h2>
+        <div class="product-list">
+            {% for fleur in fleurs %}
+                <div class="product-card">
+                    <h3>{{ fleur.libelle }}</h3>
+                    <p>Prix : {{ fleur.prix }} €</p>
+                    <p>Stock : {{ fleur.quantiteStock }}</p>
                 </div>
-            </section>
-        {% endblock %}
-        
-    </main>
-
-    {%endblock%}
+                {% else %}
+                    <p>Aucun produit disponible.</p>
+            {% endfor %}
+        </div>
+    </section>
+{%endblock%}
