@@ -11,6 +11,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+
+#[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_LOGIN', fields: ['login'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -23,28 +25,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $login = null;
 
     /**
-     * @var list<string> 
+     * @var list<string> The user roles
      */
     #[ORM\Column]
     private array $roles = [];
 
     /**
      * @var string 
+     * @var string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 200)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 200)]
     private ?string $forename = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)] 
-    private ?\DateTimeImmutable $birthday = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $birth = null;
 
-    #[ORM\Column(type: "boolean", options: ["default" => false])] // Define the admin field with a default value
-    private bool $admin = false;
+    #[ORM\Column]
+    private ?bool $admin = null;
+
+    //#[ORM\Column(type: "boolean", options: ["default" => false])] // Define the admin field with a default value
+    //private bool $admin = false;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cart::class)]
     private Collection $cart;
@@ -156,19 +162,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBirthday(): ?\DateTimeImmutable
+    public function getBirth(): ?\DateTimeInterface
     {
-        return $this->birthday;
+        return $this->birth;
     }
 
-    public function setBirthday(?\DateTimeImmutable $birthday): static // Allow null as a valid value
+    public function setBirth(\DateTimeInterface $birth): static
     {
-        $this->birthday = $birthday;
+        $this->birth = $birth;
 
         return $this;
     }
 
-    public function isAdmin(): bool
+    public function isAdmin(): ?bool
     {
         return $this->admin;
     }
