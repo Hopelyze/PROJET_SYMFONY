@@ -1,10 +1,27 @@
 {% block menu %}
     <div class="menu">
+    {% if app.user %}
         <a href="{{ path('main') }}">Accueil</a>
-        <a href="{{ path('product_list') }}">Produits</a>
-        <a href="#cart">Panier</a>
-        <a href="#account">Mon Compte</a>
-        <a href="#contact">Contact</a>
+        <a href="#account">Gérer son profil</a>
+        <a href="{{ path('security_logout') }}">Déconnexion</a>
+        {% if is_granted('ROLE_USER') %}
+            <a href="{{ path('product_list') }}">Liste des produits</a>
+            <a href="cart">Gérer le panier</a>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}  
+            <a href="#account">Gérer les utilisateurs</a>
+            <a href="#account">Créer un produit</a>
+            <a href="https://fr.wikipedia.org/wiki/Pong">Lien vers un site extérieur</a>
+        {% endif %}
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <a href="#account">Gérer les administrateurs</a>
+        {% endif %}
+        <a href="{{ path('security_logout') }}">Déconnexion</a>
+    {% else %}
+        <a href="{{ path('main') }}">Accueil</a>
+        <a href="{{ path('security_login') }}">Connexion</a>
+        <a href="#account">Créer un compte</a>
+    {% endif %} 
     </div>
 
 {% endblock %}

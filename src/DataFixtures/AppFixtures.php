@@ -29,13 +29,15 @@ class AppFixtures extends Fixture
             ['Lavande', 8.00, 35, 'images/lavande.jpg'],
         ];
 
+        $flowers = [];
         foreach ($DataFlowers as [$wording, $price, $quantityStock, $image]) {
-            $flowers = new Flowers();
-            $flowers->setWording($wording);
-            $flowers->setPrice($price);
-            $flowers->setQuantityStock($quantityStock);
-            $flowers->setImage($image); 
-            $manager->persist($flowers);
+            $flower = new Flowers();
+            $flower->setWording($wording);
+            $flower->setPrice($price);
+            $flower->setQuantityStock($quantityStock);
+            $flower->setImage($image); 
+            $manager->persist($flower);
+            $flowers[] = $flower;
         }
         
         $country1 = new Country();
@@ -189,25 +191,33 @@ class AppFixtures extends Fixture
         $cart1 = new Cart();
         $cart1
             ->setCart('Panier de Gilles')
-            ->setUser($user1);
+            ->setUser($user1)
+            ->setFlower($flowers[0]) // Ensure a flower is set
+            ->setQuantity(2);
         $manager->persist($cart1);
 
         $cart2 = new Cart();
         $cart2
             ->setCart('Panier de Rita')
-            ->setUser($user2);
+            ->setUser($user2)
+            ->setFlower($flowers[1]) // Ensure a flower is set
+            ->setQuantity(3);
         $manager->persist($cart2);
 
         $cart3 = new Cart();   
         $cart3
             ->setCart('Panier de Boumediene')
-            ->setUser($user3);
+            ->setUser($user3)
+            ->setFlower($flowers[2]) // Example flower
+            ->setQuantity(1); // Set quantity
         $manager->persist($cart3);
 
         $cart4 = new Cart();
         $cart4
             ->setCart('Panier de Chloe')
-            ->setUser($user4);
+            ->setUser($user4)
+            ->setFlower($flowers[3]) // Example flower
+            ->setQuantity(4); // Set quantity
         $manager->persist($cart4);
 
     

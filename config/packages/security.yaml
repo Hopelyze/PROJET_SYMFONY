@@ -16,10 +16,11 @@ security:
             lazy: true
             provider: app_user_provider
             form_login:
-                login_path: login
-                check_path: login
+                login_path: security_login
+                check_path: security_login
+                
             logout:
-                path: logout
+                path: security_logout
 
     access_control:
         - { path: ^/cart, roles: ROLE_USER }

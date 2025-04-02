@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Entity;
-
 use App\Repository\CartRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\User;
+use App\Entity\Flowers;
 
 #[ORM\Entity(repositoryClass: CartRepository::class)]
 class Cart
@@ -14,28 +14,20 @@ class Cart
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'cart')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private User $user;
+    private ?User $user = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Cart = null;
+    #[ORM\ManyToOne(targetEntity: Flowers::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Flowers $flower = null;
+
+    #[ORM\Column]
+    private ?int $quantity = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCart(): ?string
-    {
-        return $this->Cart;
-    }
-
-    public function setCart(string $Cart): static
-    {
-        $this->Cart = $Cart;
-
-        return $this;
     }
 
     public function getUser(): ?User
@@ -43,9 +35,33 @@ class Cart
         return $this->user;
     }
 
-    public function setUser(User $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getFlower(): ?Flowers
+    {
+        return $this->flower;
+    }
+
+    public function setFlower(?Flowers $flower): static
+    {
+        $this->flower = $flower;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): static
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }

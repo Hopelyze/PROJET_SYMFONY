@@ -13,18 +13,27 @@ final class MainController extends AbstractController
     #[Route('/', name: 'main')]
     public function indexAction(EntityManagerInterface $entityManager): Response
     {
-        $moi = $this->getParameter('moi'); // Récupère la variable depuis services.yaml
+        $user = $this->getUser();
+        $fullname = 'anonyme';
+        $country = 'france';
+
+        if ($user){
+            $id = $user->getId();
+            $fullname = $user->getName() . ' ' . $user->getSurname();
+            $country = $user->getCountry() ? $user->getCountry()->getName() : 'france';
+        }
 
         return $this->render('Main/index.html.twig', [
-            'moi' => $moi,
+            'fullname' => $fullname,
+            'country' => $country,
         ]);
     }
 
-    public function menuAction(): Response
+    public function menuAction(EntityManagerInterface $entityManager): Response
     {
-        $args = array(
-            // Add any required arguments here
-        );
-        return $this->render('Layouts/_menu.html.twig', $args);
+        $user = $this->getUser();
+        $id = is_null($user) ? null : $user->getId();
+
+        return $this->render('Layouts/_menu.html.twig');
     }
 }
