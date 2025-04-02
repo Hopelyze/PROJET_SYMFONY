@@ -3,8 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CartRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: CartRepository::class)]
 class Cart
@@ -13,21 +13,29 @@ class Cart
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    
-    /**
-     * @var Collection<int, CartContent>
-     */
-    #[ORM\OneToMany(targetEntity: CartContent::class, mappedBy: 'cart', orphanRemoval: true)]
-    private Collection $cartContents;
 
-    public function __construct()
-    {
-        $this->cartContents = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'cart')]
+    #[ORM\JoinColumn(nullable: false)]
+    private User $user;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Cart = null;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getCart(): ?string
+    {
+        return $this->Cart;
+    }
+
+    public function setCart(string $Cart): static
+    {
+        $this->Cart = $Cart;
+
+        return $this;
     }
 
     public function getUser(): ?User
@@ -41,6 +49,4 @@ class Cart
 
         return $this;
     }
-
-   
 }

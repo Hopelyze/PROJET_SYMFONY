@@ -16,7 +16,7 @@ class Flowers
     #[ORM\Column(length: 255)]
     private ?string $wording = null;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[ORM\Column(type: 'float', precision: 10, scale: 2)]
     private ?float $price = null;
 
     #[ORM\Column]

@@ -7,7 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Fleurs>
+ * @extends ServiceEntityRepository<Flowers>
  */
 class FlowersRepository extends ServiceEntityRepository
 {
@@ -31,7 +31,7 @@ class FlowersRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Fleurs
+    //    public function findOneBySomeField($value): ?Flowers
     //    {
     //        return $this->createQueryBuilder('f')
     //            ->andWhere('f.exampleField = :val')

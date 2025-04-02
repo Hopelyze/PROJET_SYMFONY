@@ -7,9 +7,10 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_LOGIN', fields: ['login'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -22,28 +23,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $login = null;
 
     /**
-     * @var list<string> The user roles
+     * @var list<string> 
      */
     #[ORM\Column]
     private array $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var string 
      */
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 200)]
+    #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 200)]
+    #[ORM\Column(length: 255)]
     private ?string $forename = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $birth = null;
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)] 
+    private ?\DateTimeImmutable $birthday = null;
 
     #[ORM\Column]
     private ?bool $admin = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cart::class)]
+    private Collection $cart;
+
+    public function __construct()
+    {
+        $this->cart = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -144,14 +153,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBirth(): ?\DateTimeInterface
+    public function getBirthday(): ?\DateTimeImmutable
     {
-        return $this->birth;
+        return $this->birthday;
     }
 
-    public function setBirth(\DateTimeInterface $birth): static
+    public function setBirthday(?\DateTimeImmutable $birthday): static // Allow null as a valid value
     {
-        $this->birth = $birth;
+        $this->birthday = $birthday;
 
         return $this;
     }
@@ -164,6 +173,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAdmin(bool $admin): static
     {
         $this->admin = $admin;
+
+        return $this;
+    }
+
+    public function getCart(): Collection
+    {
+        return $this->cart;
+    }
+
+    public function addCart(Cart $cart): static
+    {
+        if (!$this->cart->contains($cart)) {
+            $this->cart[] = $cart;
+            $cart->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): static
+    {
+        if ($this->cart->removeElement($cart)) {
+            if ($cart->getUser() === $this) {
+                $cart->setUser(null);
+            }
+        }
 
         return $this;
     }
