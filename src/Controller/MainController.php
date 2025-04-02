@@ -2,24 +2,29 @@
 
 namespace App\Controller;
 
+use App\Service\DatabaseHandler;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class MainController extends AbstractController
 {
-    #[Route('/', name: 'accueil_index')]
-    public function indexAction(): Response
+    #[Route('/', name: 'main')]
+    public function indexAction(EntityManagerInterface $entityManager): Response
     {
         $moi = $this->getParameter('moi'); // Récupère la variable depuis services.yaml
-        return $this->render('index.html.twig', ['moi' => $moi,]);
+
+        return $this->render('Main/index.html.twig', [
+            'moi' => $moi,
+        ]);
     }
 
-    // pour inclusion de contrôleur dans le template secondaire : action non routable
     public function menuAction(): Response
     {
         $args = array(
+            // Add any required arguments here
         );
-        return $this->render('templates/_menu.html.twig', $args);
+        return $this->render('Layouts/_menu.html.twig', $args);
     }
 }

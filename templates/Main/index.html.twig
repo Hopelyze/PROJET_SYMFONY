@@ -1,0 +1,12 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/menu.css') }}"/>
+{% endblock %}
+
+{% block vue %}
+    <h1>Bienvenue sur le meilleur site de vente de fleurs ! </h1>
+{% endblock %}

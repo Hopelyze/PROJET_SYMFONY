@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Fleurs;
+use App\Entity\Flowers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Fleurs>
  */
-class FleursRepository extends ServiceEntityRepository
+class FlowersRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Fleurs::class);
+        parent::__construct($registry, Flowers::class);
     }
 
     //    /**
-    //     * @return Fleurs[] Returns an array of Fleurs objects
+    //     * @return Flowers[] Returns an array of Flowers objects
     //     */
     //    public function findByExampleField($value): array
     //    {

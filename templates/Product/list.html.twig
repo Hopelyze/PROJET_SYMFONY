@@ -1,0 +1,29 @@
+{# niveau 3 #}
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block vue %}
+    <h1>Liste des Produits du site</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>Nom de la fleur</th>
+            <th>Prix à l'unité</th>
+            <th>Stock</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for flower in flowers %}
+            <tr>
+                <td>
+                    <img src="{{ asset(flower.image) }}" alt="{{ flower.wording }}" style="width: 100px; height: auto;">
+                </td>
+                <td>{{ flower.wording }}</td>
+                <td>{{ flower.price }} €</td>
+                <td>{{ flower.quantityStock }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
