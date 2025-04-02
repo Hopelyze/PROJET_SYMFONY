@@ -81,7 +81,7 @@ class SecurityTestController extends AbstractController
 
     #[Route('/role1', name: '_role1')]
     #[IsGranted('ROLE_ADMIN')]
-    public function accessUserAction(): Response
+    public function Role1Action(): Response
     {
         return new Response('<body>IsGranted(\'ROLE_ADMIN\')</body>');
     }
