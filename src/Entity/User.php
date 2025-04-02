@@ -43,11 +43,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)] 
     private ?\DateTimeImmutable $birthday = null;
 
-    #[ORM\Column]
-    private ?bool $admin = null;
+    #[ORM\Column(type: "boolean", options: ["default" => false])] // Define the admin field with a default value
+    private bool $admin = false;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cart::class)]
     private Collection $cart;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Country = null;
 
     public function __construct()
     {
@@ -165,7 +168,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isAdmin(): ?bool
+    public function isAdmin(): bool
     {
         return $this->admin;
     }
@@ -202,4 +205,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Country $country): static
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
 }

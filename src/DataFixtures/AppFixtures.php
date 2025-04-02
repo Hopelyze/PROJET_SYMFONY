@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 use App\Entity\Flowers;
 use App\Entity\Cart;
+use App\Entity\Country;
 use App\Entity\App;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -37,14 +38,89 @@ class AppFixtures extends Fixture
             $manager->persist($flowers);
         }
         
+        $country1 = new Country();
+        $country1
+            ->setName('France')
+            ->setCode('FR');
+        $manager->persist($country1);
+
+        $country2 = new Country();
+        $country2
+            ->setName('Allemagne')
+            ->setCode('DE');
+        $manager->persist($country2);
+
+        $country3 = new Country();  
+        $country3
+            ->setName('Namibie')
+            ->setCode('NA');
+        $manager->persist($country3);
+        
+        $country4 = new Country();  
+        $country4
+            ->setName('Belgique')
+            ->setCode('BE');    
+        $manager->persist($country4);
+
+        $country5 = new Country();  
+        $country5
+            ->setName('Suisse')
+            ->setCode('CH');
+        $manager->persist($country5);   
+
+        $country6 = new Country();
+        $country6
+            ->setName('Espagne')
+            ->setCode('ES');
+        $manager->persist($country6);
+
+
+        $country7 = new Country();  
+        $country7
+            ->setName('Portugal')
+            ->setCode('PT');
+        $manager->persist($country7);   
+
+        $country8 = new Country();
+        $country8
+            ->setName('Italie')
+            ->setCode('IT');
+        $manager->persist($country8);
+
+        $country9 = new Country();
+        $country9
+            ->setName('Royaume-Uni')
+            ->setCode('GB');
+        $manager->persist($country9);
+
+        $country10 = new Country();         
+        $country10
+            ->setName('Sénégal')
+            ->setCode('SN');
+        $manager->persist($country10);
+
+        $country11 = new Country();
+        $country11
+            ->setName('Maroc')
+            ->setCode('MA');
+        $manager->persist($country11);
+
+        $country12 = new Country();
+        $country12
+            ->setName('Algérie')
+            ->setCode('DZ');
+        $manager->persist($country12);
+        
+
         $user0 = new User();
         $user0
             ->setLogin('sadmin')
             ->setPassword($this->passwordHasher->hashPassword($user0, 'nimdas'))
             ->setName('Mere')
-            ->setSurname(' Nature')
-            ->setBirthday(date_create("1900-01-01"))
-            ->setRoles(['ROLE_SUPER_ADMIN']);
+            ->setForename('Nature')
+            ->setBirthday(new \DateTimeImmutable("1900-01-01")) // Use DateTimeImmutable
+            ->setRoles(['ROLE_SUPER_ADMIN'])
+            ->setCountry($country1);
         $manager->persist($user0);
 
 
@@ -56,7 +132,8 @@ class AppFixtures extends Fixture
             ->setForename('Subrenat')
             ->setBirthday(null) 
             ->setAdmin(true)
-            ->setRoles(['ROLE_ADMIN']);
+            ->setRoles(['ROLE_ADMIN'])
+            ->setCountry($country1); // Set the country
         $manager->persist($user1);
 
         $user2 = new User();
@@ -67,7 +144,8 @@ class AppFixtures extends Fixture
             ->setForename('Zrour')
             ->setBirthday(null) 
             ->setAdmin(false)
-            ->setRoles(['ROLE_USER']);
+            ->setRoles(['ROLE_USER'])
+            ->setCountry($country1);
         $manager->persist($user2);
 
         $user3  = new User();
@@ -78,7 +156,8 @@ class AppFixtures extends Fixture
             ->setForename('Saidi')
             ->setBirthday(null) 
             ->setAdmin(false)
-            ->setRoles(['ROLE_USER']);
+            ->setRoles(['ROLE_USER'])
+            ->setCountry($country1);
         $manager->persist($user3);
 
         $user4 = new User();
@@ -89,19 +168,21 @@ class AppFixtures extends Fixture
             ->setForename('Lepretre')
             ->setBirthday(null) 
             ->setAdmin(true)
-            ->setRoles(['ROLE_ADMIN']);
+            ->setRoles(['ROLE_ADMIN'])
+            ->setCountry($country1);
         $manager->persist($user4);
 
         $user5 = new User();
         $user5 
-            ->setLogin('chloe')
+            ->setLogin('claire')
             ->setPassword($this->passwordHasher->hashPassword($user5,'eolhc'))
             ->setName('Claire')
             ->setForename('Besancon')
-            ->setBirthday(date_create("2004-03-08"))
+            ->setBirthday(new \DateTimeImmutable("2004-03-08")) // Use DateTimeImmutable
             ->setAdmin(true)
-            ->setRoles(['ROLE_ADMIN']);
-        $manager->persist($user4);
+            ->setRoles(['ROLE_ADMIN'])
+            ->setCountry($country1);
+        $manager->persist($user5);
 
 
 
@@ -129,7 +210,7 @@ class AppFixtures extends Fixture
             ->setUser($user4);
         $manager->persist($cart4);
 
-
+    
         $manager->flush();
     }
 }
