@@ -12,8 +12,12 @@
                     <div><strong>Nom :</strong> {{ flower.wording }}</div>
                     <div><strong>Prix :</strong> {{ flower.price }} €</div>
                     <div><strong>Stock :</strong> {{ flower.quantityStock }}</div>
+                    <button onclick="window.location.href='{{ path('product_add', {id: flower.id, quantity: 1}) }}'">Ajout un</button>
                 </div>
             </div>
         {% endfor %}
     </div>
 {% endblock %}
+
+
+    

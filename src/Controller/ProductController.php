@@ -40,30 +40,47 @@ final class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/remove/{id}', name: '_remove')]
+    #[Route('/add/{id}/{quantity}', name: '_add')]
+    public function addAction(int $id, int $quantity, EntityManagerInterface $manager): Response
+    {
+        $user = $this->getUser();
+        $idUser = $user->getId();
+        
+        $cartContents = $manager->getRepository(Cart::class)->findBy(['user' => $user]);
+
+        $produit = new Cart($idUser, $id, $quantity);
+
+        $manager->persist($produit);
+        $manager->flush();
+
+        return $this->redirectToRoute('product/list', $manager);
+
+    }
+
+
+    #[Route('/remove/{id}', name: '_remove', requirements: ['id' => '[1-9]d*'])]
     public function removeAction(int $id, EntityManagerInterface $manager): Response
     {
         $user = $this->getUser();
         $cartContents = $manager->getRepository(Cart::class)->findBy(['user' => $user]);
 
-        $produit = $cartContents->find($id);
+        $produit = null;
+        foreach ($cartContents as $item) {
+            if ($item->getId() == $id) {
+                $produit = $item;
+                break;
+            }
+        }
 
-        if (is_null($produit))
+        if (is_null($produit)){
             throw $this->createNotFoundException('erreur suppression produit ' . $id);
+        }
 
         $manager->remove($produit);
         $manager->flush();
         $this->addFlash('info', 'suppression produit ' . $id . ' reussie');
 
-        $totalPrice = 0;
-        foreach ($cartContents as $content) {
-            $totalPrice += $content->getFlower()->getPrice() * $content->getQuantity();
-        }
-
-        return $this->render('cart/cart.html.twig', [
-            'cart' => ['cartContents' => $cartContents],
-            'totalPrice' => $totalPrice,
-        ]);
+        return $this->redirectToRoute('product/cart', $manager);
     }
 
     #[Route('/cart/clear', name: '_cart_clear')]
@@ -72,26 +89,24 @@ final class ProductController extends AbstractController
         $user = $this->getUser();
         $cartContents = $manager->getRepository(Cart::class)->findBy(['user' => $user]);
 
-        foreach ($cartContents as $item) {
-            $manager->remove($item);
-        }
+        $produit = $cartContents->findAll();
+
+        if (is_null($produit))
+            throw $this->createNotFoundException('erreur suppression produit ' . $id);
+
+        $manager->remove($produit);
         $manager->flush();
+        $this->addFlash('info', 'suppression des produits ' . $id . ' reussie');
 
-        $this->addFlash('info', 'Le panier a été vidé.');
-
-        return $this->redirectToRoute('product_cart');
-        //return $this->render('cart/cart.html.twig', [
-         //   'cart' => ['cartContents' => $cartContents],
-        //    'totalPrice' => $totalPrice,
-        //]);
+        return $this->redirectToRoute('product/cart', $manager);
     }
 
     #[Route('/cart/checkout', name: '_cart_checkout')]
     public function cartCheckoutAction(EntityManagerInterface $manager): Response
     {
         $this->addFlash('info', 'Achat réalisé');
-        return $this->redirectToRoute('product_cart');
-        //return $this->redirectToRoute('cart', $manager);
+
+        return $this->redirectToRoute('product/cart', $manager);
     }
 
     #[Route('/create', name: '_create')]
