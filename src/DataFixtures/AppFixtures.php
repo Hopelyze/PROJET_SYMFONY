@@ -27,6 +27,7 @@ class AppFixtures extends Fixture
             ['Orchidées blanches', 15.00, 20, 'images/orchidees_blanches.jpg'],
             ['Lys rose', 12.00, 40, 'images/lys_rose.jpg'],
             ['Lavande', 8.00, 35, 'images/lavande.jpg'],
+            ['Coquelicot', 4.99, 50, 'images/coquelicot.jpg'],
         ];
 
         $flowers = [];

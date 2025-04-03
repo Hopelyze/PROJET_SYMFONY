@@ -4,3 +4,30 @@ footer {
     background-repeat: no-repeat; /* Empêche la répétition de l'image */
 }
 
+
+.product-list {
+    display: flex; /* Ajout pour disposition horizontale */
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si nécessaire */
+    gap: 20px; /* Espacement entre les produits */
+    padding: 20px;
+    padding-left: 20px;
+    margin-top: 20px;
+} 
+
+.product-list li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    list-style-type: none; /* Supprime les cercles des listes */
+    font-size: 20px;
+    text-align: center; /* Centrage du contenu du produit */
+    flex: 0 1 250px; /* Permet une largeur minimale et maximale pour les éléments */
+}
+
+.product-image {
+    width: 150px;     
+    height: 150px; 
+    object-fit: cover;
+    margin-right: 0; /* Supprime l'espacement latéral */
+    display: block; /* Change inline-block à block pour une meilleure cohérence */
+    margin: 0 auto; /* Centre l'image horizontalement */
+}
