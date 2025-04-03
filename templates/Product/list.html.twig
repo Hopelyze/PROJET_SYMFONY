@@ -4,29 +4,20 @@
 {% block vue %}
     <h1>Liste des Produits du site</h1>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Image</th>
-            <th>Nom de la fleur</th>
-            <th>Prix à l'unité</th>
-            <th>Stock</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="product-list">
         {% for flower in flowers %}
-            <tr>
-                <td>
-                    <img src="{{ asset(flower.image) }}" alt="{{ flower.wording }}" style="width: 100px; height: auto;">
-                </td>
-                <td>{{ flower.wording }}</td>
-                <td>{{ flower.price }} €</td>
-                <td>{{ flower.quantityStock }}</td>
-                <td>
+            <div class="product-item">
+                <img src="{{ asset(flower.image) }}" alt="{{ flower.wording }}" class="product-image">
+                <div class="product-info">
+                    <div><strong>Nom :</strong> {{ flower.wording }}</div>
+                    <div><strong>Prix :</strong> {{ flower.price }} €</div>
+                    <div><strong>Stock :</strong> {{ flower.quantityStock }}</div>
                     <button onclick="window.location.href='{{ path('product_add', {id: flower.id, quantity: 1}) }}'">Ajout un</button>
-                </td>
-            </tr>
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 {% endblock %}
+
+
+    

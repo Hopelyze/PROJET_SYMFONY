@@ -1,5 +1,12 @@
-{# entête du site #}
-
-<div id="site_header">
-    <img src="{{ asset('/images/banner.jpg') }}" alt="Header Image">
-</div>
+{# bandeau supérieur #}
+<header>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <img src="{{ asset('images/bannerSUPER.jpg') }}" alt="Bandeau Super-admin">
+    {% elseif is_granted('ROLE_ADMIN') %}
+        <img src="{{ asset('images/bannerADMIN.jpg') }}" alt="Bandeau Admin">
+    {% elseif is_granted('ROLE_USER') %}
+        <img src="{{ asset('images/bannerAUTH.jpg') }}" alt="Bandeau Utilisateur">
+    {% else %}
+        <img src="{{ asset('images/bannerNOAUTH.jpg') }}" alt="Bandeau Visiteur">
+    {% endif %}
+</header>

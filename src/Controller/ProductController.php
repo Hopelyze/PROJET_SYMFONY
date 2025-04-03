@@ -3,12 +3,12 @@ namespace App\Controller;
 
 use App\Entity\Flowers;
 use App\Entity\Cart;
-use App\Repository\FlowersRepository;
+use App\Form\ProductType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 
 #[Route('/product', name: 'product')]
 final class ProductController extends AbstractController
@@ -119,4 +119,26 @@ final class ProductController extends AbstractController
         return $this->redirectToRoute('product_cart');
     }
 
+    #[Route('/create', name: '_create')]
+    public function createAction(Request $request, EntityManagerInterface $manager): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
+        $flower = new Flowers();
+        $form = $this->createForm(ProductType::class, $flower);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($flower);
+            $manager->flush();
+
+            $this->addFlash('success', 'Le produit a été ajouté avec succès.');
+            return $this->redirectToRoute('main');  
+        }
+
+        return $this->render('Product/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }
