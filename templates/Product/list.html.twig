@@ -22,6 +22,9 @@
                 <td>{{ flower.wording }}</td>
                 <td>{{ flower.price }} €</td>
                 <td>{{ flower.quantityStock }}</td>
+                <td>
+                    <button onclick="window.location.href='{{ path('product_add', {id: flower.id, quantity: 1}) }}'">Ajout un</button>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
