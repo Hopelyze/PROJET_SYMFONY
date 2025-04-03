@@ -39,4 +39,31 @@ final class ProductController extends AbstractController
             'totalPrice' => $totalPrice,
         ]);
     }
+
+    #[Route('/remove/{id}', name: '_remove')]
+    public function removeAction(int $id, EntityManagerInterface $manager): Response
+    {
+        $user = $this->getUser();
+        $cartContents = $manager->getRepository(Cart::class)->findBy(['user' => $user]);
+
+        $produit = $cartContents->find($id);
+
+        if (is_null($produit))
+            throw $this->createNotFoundException('erreur suppression produit ' . $id);
+
+        $manager->remove($produit);
+        $manager->flush();
+        $this->addFlash('info', 'suppression produit ' . $id . ' reussie');
+
+        $totalPrice = 0;
+        foreach ($cartContents as $content) {
+            $totalPrice += $content->getFlower()->getPrice() * $content->getQuantity();
+        }
+
+        return $this->render('cart/cart.html.twig', [
+            'cart' => ['cartContents' => $cartContents],
+            'totalPrice' => $totalPrice,
+        ]);
+    }
+
 }
