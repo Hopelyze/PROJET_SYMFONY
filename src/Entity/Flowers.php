@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\FlowersRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Table(name: 'l3_flowers')]
 #[ORM\Entity(repositoryClass: FlowersRepository::class)]
 class Flowers
 {

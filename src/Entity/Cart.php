@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Entity\User;
 use App\Entity\Flowers;
 
-
+#[ORM\Table(name: 'l3_cart')]
 #[ORM\UnisqueConstraint(columns: ['id_user', 'id_flower', 'quantity'])]
 #[ORM\Entity(repositoryClass: CartRepository::class)]
 class Cart
