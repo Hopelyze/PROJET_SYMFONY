@@ -19,7 +19,7 @@ final class MainController extends AbstractController
 
         if ($user){
             $id = $user->getId();
-            $fullname = $user->getName() . ' ' . $user->getSurname();
+            $fullname = $user->getName() . ' ' . $user->getForename();
             $country = $user->getCountry() ? $user->getCountry()->getName() : 'france';
         }
 
