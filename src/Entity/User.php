@@ -49,8 +49,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cart::class)]
     private Collection $cart;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Country = null;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Country $country = null;
 
     public function __construct()
     {

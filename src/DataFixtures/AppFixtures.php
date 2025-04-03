@@ -190,15 +190,13 @@ class AppFixtures extends Fixture
 
         $cart1 = new Cart();
         $cart1
-            ->setCart('Panier de Gilles')
-            ->setUser($user1)
-            ->setFlower($flowers[0]) // Ensure a flower is set
-            ->setQuantity(2);
+            ->setUser($user1) // Pass a User object
+            ->setFlower($flowers[0]) // Pass a Flowers object
+            ->setQuantity(2); // Pass an integer
         $manager->persist($cart1);
 
         $cart2 = new Cart();
         $cart2
-            ->setCart('Panier de Rita')
             ->setUser($user2)
             ->setFlower($flowers[1]) // Ensure a flower is set
             ->setQuantity(3);
@@ -206,7 +204,6 @@ class AppFixtures extends Fixture
 
         $cart3 = new Cart();   
         $cart3
-            ->setCart('Panier de Boumediene')
             ->setUser($user3)
             ->setFlower($flowers[2]) // Example flower
             ->setQuantity(1); // Set quantity
@@ -214,7 +211,6 @@ class AppFixtures extends Fixture
 
         $cart4 = new Cart();
         $cart4
-            ->setCart('Panier de Chloe')
             ->setUser($user4)
             ->setFlower($flowers[3]) // Example flower
             ->setQuantity(4); // Set quantity
