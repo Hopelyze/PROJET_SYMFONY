@@ -6,7 +6,7 @@
         <a href="{{ path('security_logout') }}">Déconnexion</a>
         {% if is_granted('ROLE_USER') %}
             <a href="{{ path('product_list') }}">Liste des produits</a>
-            <a href="cart">Gérer le panier</a>
+            <a href="{{ path('product_cart') }}">Gérer le panier</a>
         {% endif %}
         {% if is_granted('ROLE_ADMIN') %}  
             <a href="#account">Gérer les utilisateurs</a>
