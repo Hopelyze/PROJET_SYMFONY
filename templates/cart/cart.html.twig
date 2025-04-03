@@ -1,8 +1,6 @@
 {# niveau 3 #}
 {% extends 'Layouts/layout_vente.html.twig' %}
 
-{% block title %}Votre Panier{% endblock %}
-
 {% block vue %}
     <h1>Votre Panier</h1>
 
@@ -22,7 +20,7 @@
                     <td>{{ content.quantity }}</td>
                     <td>{{ content.flower.price * content.quantity }}€</td>
                     <td>
-                        <button onclick="window.location.href='{{ path('cart_remove', {id: content.id}) }}'">Supprimer</button>
+                        <button onclick="window.location.href='{{ path('product_remove', {id: content.id}) }}'">Supprimer</button>
                     </td>
                 </tr>
             {% endfor %}
@@ -30,7 +28,7 @@
 
         <h2>Total : {{ totalPrice }}€</h2>
 
-        <a href="{{ path('cart_checkout') }}" class="button">Commander</a>
-        <a href="{{ path('cart_clear') }}" class="button button-red">Vider le panier</a>
+        <a href="{{ path('product_cart_checkout') }}" class="button">Commander</a>
+        <a href="{{ path('product_cart_clear') }}" class="button button-red">Vider le panier</a>
     {% endif %}
 {% endblock %}
