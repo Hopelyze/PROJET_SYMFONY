@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart; 
 use App\Service\DatabaseHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,8 +36,18 @@ final class MainController extends AbstractController
     public function menuAction(EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        $id = is_null($user) ? null : $user->getId();
+        $cartCount = 0;
 
-        return $this->render('Layouts/_menu.html.twig');
+        if ($user) {
+            // Récupérer les objets du panier pour l'utilisateur connecté
+            $cartItems = $entityManager->getRepository(Cart::class)->findBy(['user' => $user]);
+            foreach ($cartItems as $cartItem) {
+                $cartCount += $cartItem->getQuantity(); // Additionner les quantités
+            }
+        }
+
+        return $this->render('Layouts/_menu.html.twig', [
+            'cartCount' => $cartCount, // Passer le nombre d'objets dans le panier à la vue
+        ]);
     }
 }
