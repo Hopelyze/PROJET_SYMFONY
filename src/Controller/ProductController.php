@@ -17,7 +17,7 @@ final class ProductController extends AbstractController
     public function listAction(EntityManagerInterface $manager): Response
     {
         $flowers = $manager->getRepository(Flowers::class)->findAll();
-
+            
         return $this->render('Product/list.html.twig', [
             'flowers' => $flowers, 
         ]);

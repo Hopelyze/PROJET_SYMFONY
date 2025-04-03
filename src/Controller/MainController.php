@@ -16,16 +16,19 @@ final class MainController extends AbstractController
         $user = $this->getUser();
         $fullname = 'anonyme';
         $country = 'france';
+        $role = 'Aucun rôle';
 
         if ($user){
             $id = $user->getId();
             $fullname = $user->getName() . ' ' . $user->getForename();
             $country = $user->getCountry() ? $user->getCountry()->getName() : 'france';
+            $role = implode(', ', $user->getRoles()); // Récupérer les rôles de l'utilisateur
         }
 
         return $this->render('Main/index.html.twig', [
             'fullname' => $fullname,
             'country' => $country,
+            'role' => $role, 
         ]);
     }
 
