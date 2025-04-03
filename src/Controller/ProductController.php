@@ -41,24 +41,33 @@ final class ProductController extends AbstractController
     }
 
     #[Route('/add/{id}/{quantity}', name: '_add')]
-    public function addAction(int $id, int $quantity, EntityManagerInterface $manager): Response
+    public function addAction(Flowers $flower, int $quantity, EntityManagerInterface $manager): Response
     {
         $user = $this->getUser();
+
+        if (is_null($user))
+        {
+            throw $this->createNotFoundException('erreur user non identifie' . $id);
+        }
+
         $idUser = $user->getId();
         
         $cartContents = $manager->getRepository(Cart::class)->findBy(['user' => $user]);
 
-        $produit = new Cart($idUser, $id, $quantity);
+        $produit = new Cart();
+        $produit->setUser($user);
+        $produit->setFlower($flower);
+        $produit->setQuantity($quantity);
 
         $manager->persist($produit);
         $manager->flush();
 
-        return $this->redirectToRoute('product/list', $manager);
+        return $this->redirectToRoute('product_cart');
 
     }
 
 
-    #[Route('/remove/{id}', name: '_remove', requirements: ['id' => '[1-9]d*'])]
+    #[Route('/remove/{id}', name: '_remove')]
     public function removeAction(int $id, EntityManagerInterface $manager): Response
     {
         $user = $this->getUser();
@@ -80,7 +89,7 @@ final class ProductController extends AbstractController
         $manager->flush();
         $this->addFlash('info', 'suppression produit ' . $id . ' reussie');
 
-        return $this->redirectToRoute('product/cart', $manager);
+        return $this->redirectToRoute('product_cart');
     }
 
     #[Route('/cart/clear', name: '_cart_clear')]
@@ -92,20 +101,22 @@ final class ProductController extends AbstractController
         $produit = $cartContents->findAll();
 
         if (is_null($produit))
+        {
             throw $this->createNotFoundException('erreur suppression produit ' . $id);
+        }
 
         $manager->remove($produit);
         $manager->flush();
         $this->addFlash('info', 'suppression des produits ' . $id . ' reussie');
 
-        return $this->redirectToRoute('product/cart', $manager);
+        return $this->redirectToRoute('product_cart');
     }
 
     #[Route('/cart/checkout', name: '_cart_checkout')]
     public function cartCheckoutAction(EntityManagerInterface $manager): Response
     {
         $this->addFlash('info', 'Achat réalisé');
-        return $this->redirectToRoute('product/cart', $manager);
+        return $this->redirectToRoute('product_cart');
     }
 
 }
